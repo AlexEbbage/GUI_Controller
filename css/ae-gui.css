@@ -109,12 +109,36 @@
         }*/
 
         .ae-gui .input-controller {
-            border-left: 3px solid #00ace4;
-            background: #eefcff;
+            border-left: 3px solid #fff;
+            background: #ccc;
             padding-left: 4px;
             border-top: 1px solid #666;
             border-bottom: 1px solid #aaa;
         }
+		
+		
+        .ae-gui .input-controller.type-text {
+		border-left: 3px solid #44e400;
+		background: #eefff1;
+		}
+		
+		
+        .ae-gui .input-controller.type-number {
+		border-left: 3px solid #00ace4;
+		background: #eefcff;
+		}
+		
+		
+        .ae-gui .input-controller.type-boolean {
+		border-left: 3px solid #e4af00;
+		background: #fffcee;
+		}
+		
+		
+        .ae-gui .input-controller.type-range {
+		border-left: 3px solid #3d00e4;
+		background: #f0eeff;
+		}
 
             .ae-gui .input-controller > .name {
                 background: none;

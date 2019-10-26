@@ -95,11 +95,29 @@ class GuiTab {
         } else if (this.guiController.config[propertyName] === undefined) {
             throw new Error(`The config doesn't contain a property by the name of '${propertyName}'.`);
         }
+		
         let input;
         switch (typeof this.guiController.config[propertyName]) {
             case "string":
                 input = new GuiTextInput(this.guiController, propertyName);
                 break;
+            case "number":
+                input = new GuiNumberInput(this.guiController, propertyName);
+                break;
+            case "boolean":
+                input = new GuiBooleanInput(this.guiController, propertyName);
+                break;
+            case "object":
+				if(Array.isArray(this.guiController.config[propertyName])){
+					input = new GuiRangeInput(this.guiController, propertyName);
+				}
+				else{
+					input = new GuiTextInput(this.guiController, propertyName);
+				}
+				break;
+			default:
+				input = new GuiTextInput(this.guiController, propertyName);
+				break;
         }
         this.guiController.inputs[propertyName] = input;
 
@@ -134,11 +152,56 @@ class GuiInput {
 
 class GuiTextInput extends GuiInput {
     constructor(guiController, propertyName) {
+        console.log(`Text controller added for '${propertyName}'`);
+		
         super(guiController, propertyName);
 
-        GuiHelper.addClass(this.htmlInputController, "text");
+        GuiHelper.addClass(this.htmlInputController, "type-text");
 
         this.htmlInput.setAttribute("type", "text");
+        this.htmlInput.value = this.defaultValue;
+    }
+}
+
+class GuiNumberInput extends GuiInput {
+    constructor(guiController, propertyName) {
+        console.log(`Number controller added for '${propertyName}'`);
+		
+        super(guiController, propertyName);
+
+        GuiHelper.addClass(this.htmlInputController, "type-number");
+
+        this.htmlInput.setAttribute("type", "number");
+        this.htmlInput.value = this.defaultValue;
+    }
+}
+
+class GuiBooleanInput extends GuiInput {
+    constructor(guiController, propertyName) {
+        console.log(`Boolean controller added for '${propertyName}'`);
+		
+        super(guiController, propertyName);
+
+        GuiHelper.addClass(this.htmlInputController, "type-boolean");
+
+        this.htmlInput.setAttribute("type", "checkbox");
+        this.htmlInput.value = this.defaultValue;
+    }
+}
+
+class GuiRangeInput extends GuiInput {
+    constructor(guiController, propertyName) {
+        console.log(`Range controller added for '${propertyName}'`);
+		
+        super(guiController, propertyName);
+
+        GuiHelper.addClass(this.htmlInputController, "type-range");
+
+        this.htmlInput.setAttribute("type", "range");
+        this.htmlInput.setAttribute("min", this.defaultValue[0]);
+        this.htmlInput.setAttribute("value", this.defaultValue[1]);
+        this.htmlInput.setAttribute("max", this.defaultValue[2]);
+        this.htmlInput.setAttribute("step", 0.1);
         this.htmlInput.value = this.defaultValue;
     }
 }

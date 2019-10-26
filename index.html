@@ -2,9 +2,10 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AE-GUI</title>
-    <script type="text/javascript" src="~/javascript/ae-gui.js"></script>
-    <style type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/ae-gui.css">
+    <script type="text/javascript" src="javascript/ae-gui.js"></script>
 </head>
 <body>
     <div style="width:100%; top:50%; position:absolute;">
@@ -17,7 +18,7 @@
             number: 5,
             string: "banana",
             check: true,
-            range: 15
+            range: [0,4,10]
         };
         let gui = new GuiController(config);
         let tabA = gui.addTab("Settings A");
