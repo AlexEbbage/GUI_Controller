@@ -95,7 +95,7 @@ class GuiTab {
         } else if (this.guiController.config[propertyName] === undefined) {
             throw new Error(`The config doesn't contain a property by the name of '${propertyName}'.`);
         }
-		
+
         let input;
         switch (typeof this.guiController.config[propertyName]) {
             case "string":
@@ -108,16 +108,16 @@ class GuiTab {
                 input = new GuiBooleanInput(this.guiController, propertyName);
                 break;
             case "object":
-				if(Array.isArray(this.guiController.config[propertyName])){
-					input = new GuiRangeInput(this.guiController, propertyName);
-				}
-				else{
-					input = new GuiTextInput(this.guiController, propertyName);
-				}
-				break;
-			default:
-				input = new GuiTextInput(this.guiController, propertyName);
-				break;
+                if (Array.isArray(this.guiController.config[propertyName])) {
+                    input = new GuiRangeInput(this.guiController, propertyName);
+                }
+                else {
+                    input = new GuiTextInput(this.guiController, propertyName);
+                }
+                break;
+            default:
+                input = new GuiTextInput(this.guiController, propertyName);
+                break;
         }
         this.guiController.inputs[propertyName] = input;
 
@@ -128,7 +128,11 @@ class GuiTab {
 }
 
 class GuiInput {
+    static inputCounter = 0;
+
     constructor(guiController, propertyName) {
+        this.id = `ae_input_${GuiInput.inputCounter++}`;
+
         this.config = guiController.config;
         this.propertyName = propertyName;
         this.defaultValue = this.config[propertyName];
@@ -144,65 +148,111 @@ class GuiInput {
         this.htmlInputContainer = document.createElement("div");
         GuiHelper.addClass(this.htmlInputContainer, "input");
         this.htmlInputController.appendChild(this.htmlInputContainer);
-
-        this.htmlInput = document.createElement("input");
-        this.htmlInputContainer.appendChild(this.htmlInput);
     }
 }
 
 class GuiTextInput extends GuiInput {
     constructor(guiController, propertyName) {
         console.log(`Text controller added for '${propertyName}'`);
-		
+
         super(guiController, propertyName);
 
         GuiHelper.addClass(this.htmlInputController, "type-text");
 
+        this.htmlInput = document.createElement("input");
         this.htmlInput.setAttribute("type", "text");
         this.htmlInput.value = this.defaultValue;
+        this.htmlInputContainer.appendChild(this.htmlInput);
     }
 }
 
 class GuiNumberInput extends GuiInput {
     constructor(guiController, propertyName) {
         console.log(`Number controller added for '${propertyName}'`);
-		
+
         super(guiController, propertyName);
 
         GuiHelper.addClass(this.htmlInputController, "type-number");
 
+        this.htmlInput = document.createElement("input");
         this.htmlInput.setAttribute("type", "number");
         this.htmlInput.value = this.defaultValue;
+        this.htmlInputContainer.appendChild(this.htmlInput);
     }
 }
 
 class GuiBooleanInput extends GuiInput {
     constructor(guiController, propertyName) {
         console.log(`Boolean controller added for '${propertyName}'`);
-		
+
         super(guiController, propertyName);
 
         GuiHelper.addClass(this.htmlInputController, "type-boolean");
 
+        this.htmlInput = document.createElement("input");
         this.htmlInput.setAttribute("type", "checkbox");
-        this.htmlInput.value = this.defaultValue;
+        this.htmlInput.id = this.id;
+        this.htmlInputContainer.appendChild(this.htmlInput);
+
+        this.htmlCheckboxLabel = document.createElement("label");
+        this.htmlCheckboxLabel.setAttribute("for", this.id);
+        this.htmlInputContainer.appendChild(this.htmlCheckboxLabel);
+        this.htmlInput.checked = this.defaultValue;
     }
 }
 
 class GuiRangeInput extends GuiInput {
     constructor(guiController, propertyName) {
         console.log(`Range controller added for '${propertyName}'`);
-		
+
         super(guiController, propertyName);
+
+        this.stepSize = 0.1;
 
         GuiHelper.addClass(this.htmlInputController, "type-range");
 
+        this.htmlInput = document.createElement("input");
         this.htmlInput.setAttribute("type", "range");
         this.htmlInput.setAttribute("min", this.defaultValue[0]);
         this.htmlInput.setAttribute("value", this.defaultValue[1]);
         this.htmlInput.setAttribute("max", this.defaultValue[2]);
-        this.htmlInput.setAttribute("step", 0.1);
-        this.htmlInput.value = this.defaultValue;
+        this.htmlInput.setAttribute("step", this.stepSize);
+        this.htmlInputContainer.appendChild(this.htmlInput);
+
+        this.htmlRangeSelector = document.createElement("input");
+        this.htmlRangeSelector.setAttribute("type", "text");
+        this.htmlRangeSelector.value = this.defaultValue[1];
+        this.htmlInputContainer.appendChild(this.htmlRangeSelector);
+
+
+        GuiHelper.bind(this.htmlRangeSelector, "change", this.updateRangeBar.bind(this));
+        GuiHelper.bind(this.htmlInput, "change", this.updateRangeSelector.bind(this));
+    }
+
+    stepSize(increment) {
+        this.stepSize = increment;
+        this.htmlInput.setAttribute("step", this.stepSize);
+    }
+
+    updateRangeSelector() {
+        this.htmlRangeSelector.value = this.htmlInput.value;
+    }
+
+    updateRangeBar() {
+        let newValue = Number(this.htmlRangeSelector.value);
+        if (!isNaN(newValue)) {
+            if (newValue < this.defaultValue[0]) {
+                newValue = this.defaultValue[0];
+            }
+            else if (newValue > this.defaultValue[2]) {
+                newValue = this.defaultValue[2];
+            }
+        }
+        else {
+            newValue = this.htmlInput.value;
+        }
+        this.htmlInput.value = newValue;
+        this.htmlRangeSelector.value = newValue;
     }
 }
 

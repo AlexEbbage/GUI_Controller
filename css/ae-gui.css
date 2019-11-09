@@ -1,167 +1,268 @@
-        body {
-            margin: 0;
-            padding: 0;
-        }
+body {
+    margin: 0;
+    padding: 0;
+}
 
-        .ae-gui, .ae-gui * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            color: inherit;
-            font-family: inherit;
-            background: inherit;
-            line-height: 20px;
-            font-size: 15px;
-        }
+.ae-gui {
+    box-shadow: 0 0 5px rgba(0,0,0,1);
+}
 
-            .ae-gui * {
-                width: 100%;
-                min-height: 20px;
-            }
+    .ae-gui, .ae-gui * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        color: inherit;
+        font-family: inherit;
+        background: inherit;
+        line-height: 20px;
+        font-size: 15px;
+    }
 
-        div.ae-gui {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 300px;
-            border: 1px solid #000000;
-            color: white;
-            font-family: Courier New, Courier, monospace;
-            padding: 0;
-            margin: 0;
-        }
+div.ae-gui {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    border: 1px solid #000000;
+    color: white;
+    font-family: Courier New, Courier, monospace;
+    padding: 0;
+    margin: 0;
+}
 
-        /*.ae-gui > .header {
+/*.ae-gui > .header {
             border: 1px solid red;
             min-height: 20px;
         }*/
 
 
-        .ae-gui ul {
-            background: none;
-            min-height: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.2s ease-out;
-        }
+.ae-gui ul {
+    background: none;
+    min-height: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
 
-        .ae-gui > .close {
-            min-height: 20px;
-            box-sizing: border-box;
-            text-align: center;
-            color: #f00;
-            background: #444;
-            border-top: 1px solid #111;
-            border-bottom: 1px solid #666;
-        }
+.ae-gui > .close {
+    min-height: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    color: #f00;
+    background: #444;
+    border-top: 1px solid #111;
+    border-bottom: 1px solid #666;
+}
 
-            .ae-gui > .close:hover {
-                background: #666;
-            }
+    .ae-gui > .close:hover {
+        background: #666;
+    }
 
-            .ae-gui > .close:active {
-                background: #999;
-            }
+    .ae-gui > .close:active {
+        background: #999;
+    }
 
-        .ae-gui .tab > .tab-header {
-            background: #444;
-            min-height: 20px;
-            border-bottom: 1px solid #666;
-            border-top: 1px solid #111;
-        }
+.ae-gui .tab > .tab-header {
+    background: #444;
+    min-height: 20px;
+    border-bottom: 1px solid #666;
+    border-top: 1px solid #111;
+}
 
-            .ae-gui .tab > .tab-header:hover {
-                background: #666;
-            }
+    .ae-gui .tab > .tab-header:hover {
+        background: #666;
+    }
 
-            .ae-gui .tab > .tab-header:active {
-                background: #999;
-            }
+    .ae-gui .tab > .tab-header:active {
+        background: #999;
+    }
 
 
-            .ae-gui .tab > .tab-header:before {
-                content: '';
-                border: solid white;
-                border-width: 0 2px 2px 0;
-                display: inline-block;
-                padding: 2px;
-                margin-right: 8px;
-                margin-left: 5px;
-                transform: rotate(45deg);
-                -webkit-transform: rotate(45deg);
-            }
+    .ae-gui .tab > .tab-header:before {
+        content: '';
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        display: inline-block;
+        padding: 2px;
+        margin-right: 8px;
+        margin-left: 5px;
+        transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+    }
 
-        .ae-gui .tab.closed > .tab-header:before {
-            transform: rotate(-45deg);
-            -webkit-transform: rotate(-45deg);
-        }
+.ae-gui .tab.closed > .tab-header:before {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
 
-        .ae-gui .tab > ul {
-            min-height: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.2s ease-out;
-        }
+.ae-gui .tab > ul {
+    min-height: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
 
-        /*.ae-gui .tab.closed > ul {
+/*.ae-gui .tab.closed > ul {
             max-height: 0;
             overflow: hidden;
         }*/
 
-        .ae-gui .input-controller {
-            border-left: 3px solid #fff;
-            background: #ccc;
-            padding-left: 4px;
-            border-top: 1px solid #666;
-            border-bottom: 1px solid #aaa;
+.ae-gui .input-controller {
+    border-left: 3px solid #fff;
+    background: #ccc;
+    padding-left: 4px;
+    border-top: 1px solid #666;
+    border-bottom: 1px solid #aaa;
+    min-height: 23px;
+    max-height: 23px;
+}
+
+    .ae-gui .input-controller.type-text {
+        border-left: 3px solid #44e400;
+        background: #eefff1;
+    }
+
+
+    .ae-gui .input-controller.type-number {
+        border-left: 3px solid #00ace4;
+        background: #eefcff;
+    }
+
+
+    .ae-gui .input-controller.type-boolean {
+        border-left: 3px solid #e4af00;
+        background: #fffcee;
+    }
+
+
+    .ae-gui .input-controller.type-range {
+        border-left: 3px solid #3d00e4;
+        background: #f0eeff;
+    }
+
+    .ae-gui .input-controller > .name {
+        background: none;
+        color: #222;
+        display: inline-block;
+        width: 40%;
+        text-align: right;
+        padding: 0 5px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        float: left;
+    }
+
+    .ae-gui .input-controller > .input {
+        background: none;
+        color: #222;
+        display: inline-block;
+        width: 60%;
+    }
+
+        .ae-gui .input-controller > .input > input {
+            display: inline-block;
+            background: white;
+            width: 100%;
+            height: 100%;
         }
-		
-		
-        .ae-gui .input-controller.type-text {
-		border-left: 3px solid #44e400;
-		background: #eefff1;
-		}
-		
-		
-        .ae-gui .input-controller.type-number {
-		border-left: 3px solid #00ace4;
-		background: #eefcff;
-		}
-		
-		
-        .ae-gui .input-controller.type-boolean {
-		border-left: 3px solid #e4af00;
-		background: #fffcee;
-		}
-		
-		
-        .ae-gui .input-controller.type-range {
-		border-left: 3px solid #3d00e4;
-		background: #f0eeff;
-		}
 
-            .ae-gui .input-controller > .name {
-                background: none;
-                color: #222;
-                display: inline-block;
-                width: 40%;
-                text-align: right;
-                padding: 0 5px;
-                text-overflow: ellipsis;
-                overflow: hidden;
-                float: left;
-            }
 
-            .ae-gui .input-controller > .input {
-                background: none;
-                color: #222;
-                display: inline-block;
-                width: 60%;
-            }
 
-                .ae-gui .input-controller > .input > input {
-                    display: inline-block;
-                    background: white;
-                    width: 100%;
-                    height: 100%;
-                }
+    /* CHECKBOX */
+    .ae-gui .input-controller.type-boolean label {
+        position: relative;
+        padding-left: 22px;
+    }
+
+        .ae-gui .input-controller.type-boolean label::before,
+        .ae-gui .input-controller.type-boolean label::after {
+            position: absolute;
+            content: "";
+            display: inline-block;
+        }
+
+        .ae-gui .input-controller.type-boolean label::before {
+            height: 15px;
+            width: 16px;
+            border: 1px solid #444;
+            left: 0px;
+            background: white;
+            top: 1px;
+        }
+
+        .ae-gui .input-controller.type-boolean label::after {
+            height: 4px;
+            width: 10px;
+            border-left: 2px solid #444;
+            border-bottom: 2px solid #444;
+            transform: rotate(-55deg);
+            left: 3px;
+            top: 6px;
+        }
+
+    .ae-gui .input-controller.type-boolean input[type="checkbox"] {
+        opacity: 0;
+        width: 0;
+    }
+
+        .ae-gui .input-controller.type-boolean input[type="checkbox"] + label::after {
+            content: none;
+        }
+
+        .ae-gui .input-controller.type-boolean input[type="checkbox"]:checked + label::after {
+            content: "";
+        }
+
+        .ae-gui .input-controller.type-boolean input[type="checkbox"]:focus + label::before {
+            outline: rgba(255,0,0,0.9) 3px auto;
+        }
+
+    /* SLIDER */
+    .ae-gui .input-controller.type-range .input{
+        padding-right:2px;
+    }
+
+    .ae-gui .input-controller.type-range input[type="range"] {
+        -webkit-appearance: none;
+        width: 80%;
+        height: 18px;
+        border: 1px solid #444;
+        background: #fff;
+        outline: none;
+        margin-top: 2px;
+        float: left;
+    }
+
+        .ae-gui .input-controller.type-range input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 1px solid #444;
+            background: #ff0000;
+            cursor: pointer;
+        }
+
+        .ae-gui .input-controller.type-range input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            background: #ff0000;
+            cursor: pointer;
+        }
+
+    .ae-gui .input-controller.type-range input[type="text"] {
+        width: 20%;
+        background: white;
+        float: left;
+        margin-top: 2px;
+        height: 18px;
+        border: 1px solid #444;
+        border-left: none;
+        padding: 2px;
+        text-align: center;
+    }
+
+
+
+    .ae-gui .input-controller.type-range input[type="text"] {
+    }
