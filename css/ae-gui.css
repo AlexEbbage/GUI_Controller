@@ -49,32 +49,35 @@ div.ae-gui {
     box-sizing: border-box;
     text-align: center;
     color: #f00;
-    background: #444;
-    border-top: 1px solid #111;
-    border-bottom: 1px solid #666;
+    background: #222;
+    border-bottom: 1px solid #000;
+    border-top: 1px solid #666;
 }
 
     .ae-gui > .close:hover {
-        background: #666;
+        background: #444;
+        cursor: pointer;
     }
 
     .ae-gui > .close:active {
-        background: #999;
-    }
-
-.ae-gui .tab > .tab-header {
-    background: #444;
-    min-height: 20px;
-    border-bottom: 1px solid #666;
-    border-top: 1px solid #111;
-}
-
-    .ae-gui .tab > .tab-header:hover {
         background: #666;
     }
 
+.ae-gui .tab > .tab-header {
+    background: #222;
+    min-height: 20px;
+    border-top: 1px solid #666;
+    border-bottom: 1px solid #000;
+    font-weight: bold;
+}
+
+    .ae-gui .tab > .tab-header:hover {
+        background: #444;
+        cursor: pointer;
+    }
+
     .ae-gui .tab > .tab-header:active {
-        background: #999;
+        background: #666;
     }
 
 
@@ -108,16 +111,16 @@ div.ae-gui {
         }*/
 
 .ae-gui .input-controller {
-    border-left: 3px solid #fff;
-    background: #ccc;
+    /*border-left: 3px solid #fff;*/
+    background: #555;
     padding-left: 4px;
-    border-top: 1px solid #666;
-    border-bottom: 1px solid #aaa;
+    /*border-top: 1px solid #666;
+    border-bottom: 1px solid #aaa;*/
     min-height: 23px;
     max-height: 23px;
 }
 
-    .ae-gui .input-controller.type-text {
+    /*.ae-gui .input-controller.type-text {
         border-left: 3px solid #44e400;
         background: #eefff1;
     }
@@ -138,11 +141,11 @@ div.ae-gui {
     .ae-gui .input-controller.type-range {
         border-left: 3px solid #3d00e4;
         background: #f0eeff;
-    }
+    }*/
 
     .ae-gui .input-controller > .name {
         background: none;
-        color: #222;
+        color: white;
         display: inline-block;
         width: 40%;
         text-align: right;
@@ -167,102 +170,154 @@ div.ae-gui {
         }
 
 
-
-    /* CHECKBOX */
-    .ae-gui .input-controller.type-boolean label {
-        position: relative;
-        padding-left: 22px;
-    }
-
-        .ae-gui .input-controller.type-boolean label::before,
-        .ae-gui .input-controller.type-boolean label::after {
-            position: absolute;
-            content: "";
-            display: inline-block;
-        }
-
-        .ae-gui .input-controller.type-boolean label::before {
-            height: 15px;
-            width: 16px;
-            border: 1px solid #444;
-            left: 0px;
-            background: white;
-            top: 1px;
-        }
-
-        .ae-gui .input-controller.type-boolean label::after {
-            height: 4px;
-            width: 10px;
-            border-left: 2px solid #444;
-            border-bottom: 2px solid #444;
-            transform: rotate(-55deg);
-            left: 3px;
-            top: 6px;
-        }
-
-    .ae-gui .input-controller.type-boolean input[type="checkbox"] {
-        opacity: 0;
-        width: 0;
-    }
-
-        .ae-gui .input-controller.type-boolean input[type="checkbox"] + label::after {
-            content: none;
-        }
-
-        .ae-gui .input-controller.type-boolean input[type="checkbox"]:checked + label::after {
-            content: "";
-        }
-
-        .ae-gui .input-controller.type-boolean input[type="checkbox"]:focus + label::before {
-            outline: rgba(255,0,0,0.9) 3px auto;
-        }
-
-    /* SLIDER */
-    .ae-gui .input-controller.type-range .input{
-        padding-right:2px;
-    }
-
-    .ae-gui .input-controller.type-range input[type="range"] {
-        -webkit-appearance: none;
-        width: 80%;
-        height: 18px;
+    .ae-gui .input-controller.type-number input,
+    .ae-gui .input-controller.type-text input {
+        height: 22px;
+        /*margin-top: 1px;*/
+        /* margin-right: 2px; */
+        /*border: none;*/
         border: 1px solid #444;
-        background: #fff;
-        outline: none;
-        margin-top: 2px;
-        float: left;
+        border-top: 1px solid #333;
+        border-bottom: 1px solid #777;
+        line-height: 20px;
+        font-size: 13px;
+        padding: 0 3px;
     }
 
-        .ae-gui .input-controller.type-range input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 18px;
-            height: 18px;
-            border: 1px solid #444;
-            background: #ff0000;
-            cursor: pointer;
-        }
+    .ae-gui .input-controller.type-number .input,
+    .ae-gui .input-controller.type-text .input {
+        padding-right: 1px;
+    }
 
-        .ae-gui .input-controller.type-range input[type="range"]::-moz-range-thumb {
-            width: 18px;
-            height: 18px;
-            background: #ff0000;
-            cursor: pointer;
-        }
+.ae-gui .tab > ul {
+    padding: 1px 0 1px 0;
+    background: #555;
+}
 
-    .ae-gui .input-controller.type-range input[type="text"] {
-        width: 20%;
+.ae-gui .tab.closed > ul {
+    padding: 0;
+}
+
+/*.ae-gui .tab > ul > div:first-of-type{
+        padding-top: 2px;
+    }
+
+.ae-gui .tab > ul > div:last-child {
+    padding-bottom: 2px;
+}*/
+
+/* CHECKBOX */
+.ae-gui .input-controller.type-boolean label {
+    position: relative;
+    padding-left: 22px;
+}
+
+    .ae-gui .input-controller.type-boolean label::before,
+    .ae-gui .input-controller.type-boolean label::after {
+        position: absolute;
+        content: "";
+        display: inline-block;
+    }
+
+    .ae-gui .input-controller.type-boolean label::before {
+        height: 20px;
+        width: 20px;
+        /*border-radius: 3px;*/
+        border: 1px solid #444;
+        border-top: 1px solid #333;
+        border-bottom: 1px solid #777;
+        left: 0px;
         background: white;
-        float: left;
-        margin-top: 2px;
+        /*top: 1px;*/
+    }
+
+    .ae-gui .input-controller.type-boolean label::after {
+        height: 5px;
+        width: 13px;
+        border-left: 2px solid #444;
+        border-bottom: 2px solid #444;
+        transform: rotate(-55deg);
+        left: 3px;
+        top: 5px;
+    }
+
+.ae-gui .input-controller.type-boolean input[type="checkbox"] {
+    opacity: 0;
+    width: 0;
+}
+
+    .ae-gui .input-controller.type-boolean input[type="checkbox"] + label::after {
+        content: none;
+    }
+
+    .ae-gui .input-controller.type-boolean input[type="checkbox"]:checked + label::after {
+        content: "";
+    }
+
+    .ae-gui .input-controller.type-boolean input[type="checkbox"]:focus + label::before {
+        outline: rgba(255,0,0,0.9) 3px auto;
+    }
+
+/* SLIDER */
+.ae-gui .input-controller.type-range .input {
+    padding-right: 2px;
+}
+
+.ae-gui .input-controller.type-range input[type="range"] {
+    -webkit-appearance: none;
+    width: 80%;
+    height: 6px;
+    border: 1px solid #444;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #777;
+    background: #fff;
+    outline: none;
+    margin-top: 8px;
+    border-radius: 3px;
+    float: left;
+}
+
+    .ae-gui .input-controller.type-range input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 18px;
         height: 18px;
-        border: 1px solid #444;
-        border-left: none;
-        padding: 2px;
-        text-align: center;
+        border: 1px solid #222;
+        border-bottom: 1px solid #000;
+        border-top: 1px solid #444;
+        border-radius: 50%;
+        background: #ff0000;
+        cursor: pointer;
     }
 
-
-
-    .ae-gui .input-controller.type-range input[type="text"] {
+    .ae-gui .input-controller.type-range input[type="range"]::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+        background: #ff0000;
+        border: 1px solid #222;
+        border-bottom: 1px solid #000;
+        border-top: 1px solid #666;
+        border-radius: 50%;
+        cursor: pointer;
     }
+
+.ae-gui .input-controller.type-range input[type="text"] {
+    width: 20%;
+    /*background: white;*/
+    float: left;
+    /*margin-top: 2px;*/
+    height: 22px;
+    /*margin-top: 1px;*/
+    /* margin-right: 2px; */
+    /*border: none;*/
+    border: 1px solid #444;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #777;
+    line-height: 20px;
+    font-size: 13px;
+    padding: 0 3px;
+    /*border: 1px solid #444;
+    border-left: none;*/
+    padding: 0 3px;
+    text-align: center;
+}

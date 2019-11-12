@@ -16,7 +16,14 @@
         let config = {
             name: "Gui Test Page",
             number: 5,
-            string: "banana",
+            stringA: "apple",
+            stringB: "banana",
+            stringC: "orange",
+            stringD: "pear",
+            stringE: "grape",
+            stringF: "kiwi",
+            stringG: "plum",
+            stringH: "fig",
             check: true,
             range: [0,2,10]
         };
@@ -24,13 +31,20 @@
         let tabA = gui.addTab("Settings A");
         tabA.addInput("name");
         tabA.addInput("number");
+        tabA.addInput("stringE");
+        tabA.addInput("stringF");
 
         let tabB = gui.addTab("Settings B");
-        tabB.addInput("string");
+        tabB.addInput("stringA");
+        tabB.addInput("stringB");
+        tabB.addInput("stringC");
 
-        let tabC = gui.addTab("Settings C");
+        let tabC = gui.addTab("Settings C").open();
+        tabC.addInput("stringG");
         tabC.addInput("check");
+        tabC.addInput("stringH");
         tabC.addInput("range");
+        tabC.addInput("stringD");
     </script>
 </body>
 </html>

@@ -48,6 +48,8 @@ class GuiController {
             this.htmlClose.innerHTML = "Close";
             this.htmlTabList.style.maxHeight = `${this.htmlTabList.scrollHeight}px`;
         }
+
+        return this;
     }
 }
 
@@ -78,15 +80,12 @@ class GuiTab {
         this.closed = !this.closed;
         if (this.closed) {
             GuiHelper.addClass(this.htmlTab, "closed");
-            this.htmlInputList.style.maxHeight = null;
-            let alteredHeight = this.guiController.htmlTabList.scrollHeight - this.htmlInputList.scrollHeight;
-            this.guiController.htmlTabList.style.maxHeight = `${alteredHeight}px`;
         } else {
             GuiHelper.removeClass(this.htmlTab, "closed");
-            this.htmlInputList.style.maxHeight = `${this.htmlInputList.scrollHeight}px`;
-            let alteredHeight = this.guiController.htmlTabList.scrollHeight + this.htmlInputList.scrollHeight;
-            this.guiController.htmlTabList.style.maxHeight = `${alteredHeight}px`;
         }
+        this.updateHeight();
+
+        return this;
     }
 
     addInput(propertyName) {
@@ -122,8 +121,32 @@ class GuiTab {
         this.guiController.inputs[propertyName] = input;
 
         this.htmlInputList.appendChild(input.htmlInputController);
+        this.updateHeight();
 
         return input;
+    }
+
+    open() {
+        this.closed = false;
+        GuiHelper.removeClass(this.htmlTab, "closed");
+        this.updateHeight();
+
+        return this;
+    }
+
+    updateHeight() {
+        if (this.closed) {
+            this.htmlInputList.style.maxHeight = null;
+            let alteredHeight = this.guiController.htmlTabList.scrollHeight - this.htmlInputList.scrollHeight;
+            this.guiController.htmlTabList.style.maxHeight = `${alteredHeight}px`;
+        }
+        else {
+            this.htmlInputList.style.maxHeight = `${this.htmlInputList.scrollHeight}px`;
+            let alteredHeight = this.guiController.htmlTabList.scrollHeight + this.htmlInputList.scrollHeight;
+            this.guiController.htmlTabList.style.maxHeight = `${alteredHeight}px`;
+        }
+
+        return this;
     }
 }
 
@@ -226,16 +249,20 @@ class GuiRangeInput extends GuiInput {
 
 
         GuiHelper.bind(this.htmlRangeSelector, "change", this.updateRangeBar.bind(this));
-        GuiHelper.bind(this.htmlInput, "change", this.updateRangeSelector.bind(this));
+        GuiHelper.bind(this.htmlInput, "input", this.updateRangeSelector.bind(this));
     }
 
     stepSize(increment) {
         this.stepSize = increment;
         this.htmlInput.setAttribute("step", this.stepSize);
+
+        return this;
     }
 
     updateRangeSelector() {
         this.htmlRangeSelector.value = this.htmlInput.value;
+
+        return this;
     }
 
     updateRangeBar() {
@@ -253,6 +280,8 @@ class GuiRangeInput extends GuiInput {
         }
         this.htmlInput.value = newValue;
         this.htmlRangeSelector.value = newValue;
+
+        return this;
     }
 }
 
