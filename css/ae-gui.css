@@ -30,12 +30,6 @@ div.ae-gui {
     margin: 0;
 }
 
-/*.ae-gui > .header {
-            border: 1px solid red;
-            min-height: 20px;
-        }*/
-
-
 .ae-gui ul {
     background: none;
     min-height: 0;
@@ -45,40 +39,30 @@ div.ae-gui {
 }
 
 .ae-gui > .close {
-    min-height: 20px;
-    box-sizing: border-box;
     text-align: center;
-    color: #f00;
-    background: #222;
-    border-bottom: 1px solid #000;
-    border-top: 1px solid #666;
+    color: #ff6565;
 }
 
-    .ae-gui > .close:hover {
-        background: #444;
-        cursor: pointer;
-    }
-
-    .ae-gui > .close:active {
-        background: #666;
-    }
-
+.ae-gui > .close,
 .ae-gui .tab > .tab-header {
     background: #222;
-    min-height: 20px;
+    height:23px;
+    line-height:21px;
     border-top: 1px solid #666;
     border-bottom: 1px solid #000;
     font-weight: bold;
 }
 
-    .ae-gui .tab > .tab-header:hover {
-        background: #444;
-        cursor: pointer;
-    }
+.ae-gui .tab > .tab-header:hover,
+.ae-gui > .close:hover {
+    background: #444;
+    cursor: pointer;
+}
 
-    .ae-gui .tab > .tab-header:active {
-        background: #666;
-    }
+.ae-gui .tab > .tab-header:active,
+.ae-gui > .close:active {
+    background: #666;
+}
 
 
     .ae-gui .tab > .tab-header:before {
@@ -91,11 +75,13 @@ div.ae-gui {
         margin-left: 5px;
         transform: rotate(45deg);
         -webkit-transform: rotate(45deg);
+        margin-bottom: 1px;
     }
 
 .ae-gui .tab.closed > .tab-header:before {
     transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
+    margin-bottom: 0;
 }
 
 .ae-gui .tab > ul {
@@ -105,43 +91,39 @@ div.ae-gui {
     transition: max-height 0.2s ease-out;
 }
 
-/*.ae-gui .tab.closed > ul {
-            max-height: 0;
-            overflow: hidden;
-        }*/
-
 .ae-gui .input-controller {
-    /*border-left: 3px solid #fff;*/
     background: #555;
     padding-left: 4px;
-    /*border-top: 1px solid #666;
-    border-bottom: 1px solid #aaa;*/
     min-height: 23px;
     max-height: 23px;
 }
 
-    /*.ae-gui .input-controller.type-text {
-        border-left: 3px solid #44e400;
-        background: #eefff1;
+    .ae-gui .input-controller.type-text .name {
+        /*border-left: 3px solid #44e400;*/
+        /*background: #eefff1;*/
+        color: #24ff4b;
     }
 
 
-    .ae-gui .input-controller.type-number {
-        border-left: 3px solid #00ace4;
-        background: #eefcff;
+    .ae-gui .input-controller.type-number .name {
+        /*border-left: 3px solid #00ace4;*/
+        /*background: #eefcff;*/
+        color: #80edff;
     }
 
 
-    .ae-gui .input-controller.type-boolean {
-        border-left: 3px solid #e4af00;
-        background: #fffcee;
+    .ae-gui .input-controller.type-boolean .name {
+        /*border-left: 3px solid #e4af00;*/
+        /*background: #fffcee;*/
+        color: #ffdc37;
     }
 
 
-    .ae-gui .input-controller.type-range {
-        border-left: 3px solid #3d00e4;
-        background: #f0eeff;
-    }*/
+    .ae-gui .input-controller.type-range .name {
+        /*border-left: 3px solid #3d00e4;*/
+        /*background: #f0eeff;*/
+        color: #ffa6ec;
+    }
 
     .ae-gui .input-controller > .name {
         background: none;
@@ -173,12 +155,6 @@ div.ae-gui {
     .ae-gui .input-controller.type-number input,
     .ae-gui .input-controller.type-text input {
         height: 22px;
-        /*margin-top: 1px;*/
-        /* margin-right: 2px; */
-        /*border: none;*/
-        border: 1px solid #444;
-        border-top: 1px solid #333;
-        border-bottom: 1px solid #777;
         line-height: 20px;
         font-size: 13px;
         padding: 0 3px;
@@ -198,14 +174,6 @@ div.ae-gui {
     padding: 0;
 }
 
-/*.ae-gui .tab > ul > div:first-of-type{
-        padding-top: 2px;
-    }
-
-.ae-gui .tab > ul > div:last-child {
-    padding-bottom: 2px;
-}*/
-
 /* CHECKBOX */
 .ae-gui .input-controller.type-boolean label {
     position: relative;
@@ -222,13 +190,8 @@ div.ae-gui {
     .ae-gui .input-controller.type-boolean label::before {
         height: 20px;
         width: 20px;
-        /*border-radius: 3px;*/
-        border: 1px solid #444;
-        border-top: 1px solid #333;
-        border-bottom: 1px solid #777;
         left: 0px;
         background: white;
-        /*top: 1px;*/
     }
 
     .ae-gui .input-controller.type-boolean label::after {
@@ -267,9 +230,6 @@ div.ae-gui {
     -webkit-appearance: none;
     width: 80%;
     height: 6px;
-    border: 1px solid #444;
-    border-top: 1px solid #333;
-    border-bottom: 1px solid #777;
     background: #fff;
     outline: none;
     margin-top: 8px;
@@ -282,42 +242,43 @@ div.ae-gui {
         appearance: none;
         width: 18px;
         height: 18px;
-        border: 1px solid #222;
+        border: 1px solid #111;
         border-bottom: 1px solid #000;
         border-top: 1px solid #444;
+        background: #111;
         border-radius: 50%;
-        background: #ff0000;
         cursor: pointer;
     }
 
     .ae-gui .input-controller.type-range input[type="range"]::-moz-range-thumb {
         width: 18px;
         height: 18px;
-        background: #ff0000;
-        border: 1px solid #222;
+        border: 1px solid #333;
         border-bottom: 1px solid #000;
-        border-top: 1px solid #666;
+        border-top: 1px solid #555;
+        background: #111;
         border-radius: 50%;
         cursor: pointer;
     }
 
+
 .ae-gui .input-controller.type-range input[type="text"] {
     width: 20%;
-    /*background: white;*/
     float: left;
-    /*margin-top: 2px;*/
     height: 22px;
-    /*margin-top: 1px;*/
-    /* margin-right: 2px; */
-    /*border: none;*/
-    border: 1px solid #444;
-    border-top: 1px solid #333;
-    border-bottom: 1px solid #777;
     line-height: 20px;
     font-size: 13px;
     padding: 0 3px;
-    /*border: 1px solid #444;
-    border-left: none;*/
     padding: 0 3px;
     text-align: center;
+}
+
+.ae-gui .input-controller.type-number input,
+.ae-gui .input-controller.type-text input,
+.ae-gui .input-controller.type-boolean label::before,
+.ae-gui .input-controller.type-range input[type="range"],
+.ae-gui .input-controller.type-range input[type="text"] {
+    border: 1px solid #444;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #777;
 }
