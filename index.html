@@ -15,7 +15,6 @@
     <script type="text/javascript">
         let config = {
             name: "Gui Test Page",
-            number: 5,
             stringA: "apple",
             stringB: "banana",
             stringC: "orange",
@@ -25,12 +24,15 @@
             stringG: "plum",
             stringH: "fig",
             check: true,
-            range: [0,2,10]
+            rangeAll: 2,
+            rangeMinMax: 3,
+            numberStep: 4,
+            number: 5,
         };
+
         let gui = new GuiController(config);
         let tabA = gui.addTab("Settings A");
         tabA.addInput("name");
-        tabA.addInput("number");
         tabA.addInput("stringE");
         tabA.addInput("stringF");
 
@@ -43,7 +45,10 @@
         tabC.addInput("stringG");
         tabC.addInput("check");
         tabC.addInput("stringH");
-        tabC.addInput("range");
+        tabC.addInput("rangeAll", 0,10,0.2);
+        tabC.addInput("rangeMinMax", -10,20);
+        tabC.addInput("numberStep", 0.5);
+        tabC.addInput("number");
         tabC.addInput("stringD");
     </script>
 </body>

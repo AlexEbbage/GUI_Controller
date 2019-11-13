@@ -95,35 +95,36 @@ class GuiTab {
             throw new Error(`The config doesn't contain a property by the name of '${propertyName}'.`);
         }
 
-        let input;
+        if (Array.isArray(arguments[1]) || typeof arguments[1] === "object") {
+            return new GuiSelectController(this, propertyName);
+        }
+
         switch (typeof this.guiController.config[propertyName]) {
             case "string":
-                input = new GuiTextInput(this.guiController, propertyName);
-                break;
-            case "number":
-                input = new GuiNumberInput(this.guiController, propertyName);
-                break;
+                return new GuiStringInput(this, propertyName);
             case "boolean":
-                input = new GuiBooleanInput(this.guiController, propertyName);
-                break;
-            case "object":
-                if (Array.isArray(this.guiController.config[propertyName])) {
-                    input = new GuiRangeInput(this.guiController, propertyName);
+                return new GuiBooleanInput(this, propertyName);
+            case "function":
+                return new GuiFunctionInput(this, propertyName);
+            case "number":
+                if (typeof arguments[1] === "number" && typeof arguments[2] === "number") {
+                    if (typeof arguments[3] === "number") {
+                        return new GuiRangeInput(this, propertyName, { min: arguments[1], max: arguments[2], step: arguments[3] });
+                    }
+                    else {
+                        return new GuiRangeInput(this, propertyName, { min: arguments[1], max: arguments[2] });
+                    }
                 }
                 else {
-                    input = new GuiTextInput(this.guiController, propertyName);
+                    if (typeof arguments[1] === "number") {
+                         return new GuiNumberInput(this, propertyName, {step: arguments[1]}); }
+                    else {
+                        return new GuiNumberInput(this, propertyName);
+                    }
                 }
-                break;
             default:
-                input = new GuiTextInput(this.guiController, propertyName);
-                break;
+                return null;
         }
-        this.guiController.inputs[propertyName] = input;
-
-        this.htmlInputList.appendChild(input.htmlInputController);
-        this.updateHeight();
-
-        return input;
     }
 
     open() {
@@ -153,10 +154,10 @@ class GuiTab {
 class GuiInput {
     static inputCounter = 0;
 
-    constructor(guiController, propertyName) {
+    constructor(tab, propertyName) {
         this.id = `ae_input_${GuiInput.inputCounter++}`;
 
-        this.config = guiController.config;
+        this.config = tab.guiController.config;
         this.propertyName = propertyName;
         this.defaultValue = this.config[propertyName];
 
@@ -171,14 +172,18 @@ class GuiInput {
         this.htmlInputContainer = document.createElement("div");
         GuiHelper.addClass(this.htmlInputContainer, "input");
         this.htmlInputController.appendChild(this.htmlInputContainer);
+
+        tab.guiController.inputs[propertyName] = this;
+        tab.htmlInputList.appendChild(this.htmlInputController);
+        tab.updateHeight();
     }
 }
 
-class GuiTextInput extends GuiInput {
-    constructor(guiController, propertyName) {
+class GuiStringInput extends GuiInput {
+    constructor(tab, propertyName) {
         console.log(`Text controller added for '${propertyName}'`);
 
-        super(guiController, propertyName);
+        super(tab, propertyName);
 
         GuiHelper.addClass(this.htmlInputController, "type-text");
 
@@ -186,29 +191,42 @@ class GuiTextInput extends GuiInput {
         this.htmlInput.setAttribute("type", "text");
         this.htmlInput.value = this.defaultValue;
         this.htmlInputContainer.appendChild(this.htmlInput);
+
+        return this;
     }
 }
 
 class GuiNumberInput extends GuiInput {
-    constructor(guiController, propertyName) {
+    constructor(tab, propertyName, properties) {
         console.log(`Number controller added for '${propertyName}'`);
 
-        super(guiController, propertyName);
+        super(tab, propertyName);
+
+        const _properties = properties || {};
+
+        this.step = _properties.step;
+
+        if (typeof this.step === "undefined") {
+            this.step = 1;
+        }
 
         GuiHelper.addClass(this.htmlInputController, "type-number");
 
         this.htmlInput = document.createElement("input");
         this.htmlInput.setAttribute("type", "number");
+        this.htmlInput.setAttribute("step", this.step);
         this.htmlInput.value = this.defaultValue;
         this.htmlInputContainer.appendChild(this.htmlInput);
+
+        return this;
     }
 }
 
 class GuiBooleanInput extends GuiInput {
-    constructor(guiController, propertyName) {
+    constructor(tab, propertyName) {
         console.log(`Boolean controller added for '${propertyName}'`);
 
-        super(guiController, propertyName);
+        super(tab, propertyName);
 
         GuiHelper.addClass(this.htmlInputController, "type-boolean");
 
@@ -221,40 +239,57 @@ class GuiBooleanInput extends GuiInput {
         this.htmlCheckboxLabel.setAttribute("for", this.id);
         this.htmlInputContainer.appendChild(this.htmlCheckboxLabel);
         this.htmlInput.checked = this.defaultValue;
+
+        return this;
     }
 }
 
 class GuiRangeInput extends GuiInput {
-    constructor(guiController, propertyName) {
+    constructor(tab, propertyName, properties) {
         console.log(`Range controller added for '${propertyName}'`);
 
-        super(guiController, propertyName);
+        super(tab, propertyName);
 
-        this.stepSize = 0.1;
+        const _properties = properties || {};
+        this.min = _properties.min;
+        this.max = _properties.max;
+        this.step = _properties.step;
+
+        if (typeof this.min === "undefined") {
+            this.min = null;
+        }
+        if (typeof this.max === "undefined") {
+            this.max = null;
+        }
+        if (typeof this.step === "undefined") {
+            this.step = 1;
+        }
 
         GuiHelper.addClass(this.htmlInputController, "type-range");
 
         this.htmlInput = document.createElement("input");
         this.htmlInput.setAttribute("type", "range");
-        this.htmlInput.setAttribute("min", this.defaultValue[0]);
-        this.htmlInput.setAttribute("value", this.defaultValue[1]);
-        this.htmlInput.setAttribute("max", this.defaultValue[2]);
-        this.htmlInput.setAttribute("step", this.stepSize);
+        this.htmlInput.setAttribute("step", this.step);
+        if (this.min !== null) this.htmlInput.setAttribute("min", this.min);
+        if (this.max !== null) this.htmlInput.setAttribute("max", this.max);
+        this.htmlInput.setAttribute("value", this.defaultValue);
         this.htmlInputContainer.appendChild(this.htmlInput);
 
         this.htmlRangeSelector = document.createElement("input");
         this.htmlRangeSelector.setAttribute("type", "text");
-        this.htmlRangeSelector.value = this.defaultValue[1];
+        this.htmlRangeSelector.setAttribute("value", this.defaultValue);
         this.htmlInputContainer.appendChild(this.htmlRangeSelector);
 
 
         GuiHelper.bind(this.htmlRangeSelector, "change", this.updateRangeBar.bind(this));
         GuiHelper.bind(this.htmlInput, "input", this.updateRangeSelector.bind(this));
+
+        return this;
     }
 
-    stepSize(increment) {
+    step(increment) {
         this.stepSize = increment;
-        this.htmlInput.setAttribute("step", this.stepSize);
+        this.htmlInput.setAttribute("step", this.step);
 
         return this;
     }
@@ -268,11 +303,11 @@ class GuiRangeInput extends GuiInput {
     updateRangeBar() {
         let newValue = Number(this.htmlRangeSelector.value);
         if (!isNaN(newValue)) {
-            if (newValue < this.defaultValue[0]) {
-                newValue = this.defaultValue[0];
+            if (this.min !== null && newValue < this.min) {
+                newValue = this.min;
             }
-            else if (newValue > this.defaultValue[2]) {
-                newValue = this.defaultValue[2];
+            else if (this.max !== null && newValue > this.max) {
+                newValue = this.max;
             }
         }
         else {
