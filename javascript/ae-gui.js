@@ -6,6 +6,7 @@ class GuiController {
         this.tabs = {};
         this.inputs = {};
         this.closed = false;
+        this.inputCount = 0;
 
         this.htmlMain = document.createElement("div");
         GuiHelper.addClass(this.htmlMain, "ae-gui");
@@ -152,10 +153,8 @@ class GuiTab {
 }
 
 class GuiInput {
-    static inputCounter = 0;
-
     constructor(tab, propertyName) {
-        this.id = `ae_input_${GuiInput.inputCounter++}`;
+        this.id = `ae_input_${tab.guiController.inputCount++}`;
 
         this.config = tab.guiController.config;
         this.propertyName = propertyName;

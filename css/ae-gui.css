@@ -46,23 +46,23 @@ div.ae-gui {
 .ae-gui > .close,
 .ae-gui .tab > .tab-header {
     background: #222;
-    height:23px;
-    line-height:21px;
+    height: 23px;
+    line-height: 21px;
     border-top: 1px solid #666;
     border-bottom: 1px solid #000;
     font-weight: bold;
 }
 
-.ae-gui .tab > .tab-header:hover,
-.ae-gui > .close:hover {
-    background: #444;
-    cursor: pointer;
-}
+    .ae-gui .tab > .tab-header:hover,
+    .ae-gui > .close:hover {
+        background: #444;
+        cursor: pointer;
+    }
 
-.ae-gui .tab > .tab-header:active,
-.ae-gui > .close:active {
-    background: #666;
-}
+    .ae-gui .tab > .tab-header:active,
+    .ae-gui > .close:active {
+        background: #666;
+    }
 
 
     .ae-gui .tab > .tab-header:before {
@@ -98,31 +98,50 @@ div.ae-gui {
     max-height: 23px;
 }
 
-    .ae-gui .input-controller.type-text .name {
+    .ae-gui .input-controller.type-text .input {
         /*border-left: 3px solid #44e400;*/
         /*background: #eefff1;*/
-        color: #24ff4b;
+        color: #ffd400;
+    }
+
+    .ae-gui .input-controller.type-text input[type="text"]:focus {
+        outline: #ffd400 1px auto;
     }
 
 
-    .ae-gui .input-controller.type-number .name {
+    .ae-gui .input-controller.type-number .input {
         /*border-left: 3px solid #00ace4;*/
         /*background: #eefcff;*/
-        color: #80edff;
+        color: #00ef2a;
     }
 
+    .ae-gui .input-controller.type-range input[type="range"]:focus::-webkit-slider-thumb {
+        box-shadow: 0 0 2px 2px #00ef2a;
+    }
 
-    .ae-gui .input-controller.type-boolean .name {
+    .ae-gui .input-controller.type-range input[type="range"]:focus::-moz-range-thumb {
+        box-shadow: 0 0 2px 1px #00ef2a;
+    }
+
+    .ae-gui .input-controller.type-range input[type="text"]:focus,
+    .ae-gui .input-controller.type-number input[type="number"]:focus {
+        outline: #00ef2a 1px auto;
+    }
+    
+    /*.ae-gui .input-controller.type-boolean .input*/
+    .ae-gui .input-controller.type-boolean label::after {
         /*border-left: 3px solid #e4af00;*/
         /*background: #fffcee;*/
-        color: #ffdc37;
+        color: #57ddff;
+        border-left: 2px solid #57ddff;
+        border-bottom: 2px solid #57ddff;
     }
 
 
-    .ae-gui .input-controller.type-range .name {
+    .ae-gui .input-controller.type-range .input {
         /*border-left: 3px solid #3d00e4;*/
         /*background: #f0eeff;*/
-        color: #ffa6ec;
+        color: #00ef2a;
     }
 
     .ae-gui .input-controller > .name {
@@ -165,6 +184,15 @@ div.ae-gui {
         padding-right: 1px;
     }
 
+    .ae-gui .input-controller.type-number input[type=number]::-webkit-inner-spin-button,
+    .ae-gui .input-controller.type-number input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+    }
+
+    .ae-gui .input-controller.type-number input[type=number] {
+        -moz-appearance: textfield; 
+    }
+
 .ae-gui .tab > ul {
     padding: 1px 0 1px 0;
     background: #555;
@@ -197,16 +225,13 @@ div.ae-gui {
     .ae-gui .input-controller.type-boolean label::after {
         height: 5px;
         width: 13px;
-        border-left: 2px solid #444;
-        border-bottom: 2px solid #444;
         transform: rotate(-55deg);
         left: 3px;
         top: 5px;
     }
 
 .ae-gui .input-controller.type-boolean input[type="checkbox"] {
-    opacity: 0;
-    width: 0;
+    display: none;
 }
 
     .ae-gui .input-controller.type-boolean input[type="checkbox"] + label::after {
@@ -218,7 +243,7 @@ div.ae-gui {
     }
 
     .ae-gui .input-controller.type-boolean input[type="checkbox"]:focus + label::before {
-        outline: rgba(255,0,0,0.9) 3px auto;
+        outline: #57ddff 3px auto;
     }
 
 /* SLIDER */
@@ -278,7 +303,8 @@ div.ae-gui {
 .ae-gui .input-controller.type-boolean label::before,
 .ae-gui .input-controller.type-range input[type="range"],
 .ae-gui .input-controller.type-range input[type="text"] {
-    border: 1px solid #444;
-    border-top: 1px solid #333;
+    border: 1px solid #333;
+    border-top: 1px solid #000;
     border-bottom: 1px solid #777;
+    background: #333;
 }
