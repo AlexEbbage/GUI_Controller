@@ -1,6 +1,6 @@
 ## ES6 JavaScript GUI Controller
 
-You can view the demo [here](https://alexebbage.github.io/gui-controller/).
+You can view the demo [here](https://alexebbage.github.io/es6-javascript-gui-controller/).
 
 ### Description
 - A light-weight and fully-customisable GUI controller with an collapsable menu.
